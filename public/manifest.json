@@ -1,19 +1,19 @@
 {
-  "short_name": "React App",
+  "short_name": "Amazon app",
   "name": "Create React App Sample",
   "icons": [
     {
-      "src": "favicon.ico",
+      "src": "http://pngimg.com/image/61248",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     },
     {
-      "src": "logo192.png",
+      "src": "http://pngimg.com/image/61248",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "logo512.png",
+      "src": "http://pngimg.com/image/61248",
       "type": "image/png",
       "sizes": "512x512"
     }

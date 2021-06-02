@@ -1,31 +1,55 @@
+import React,{useEffect} from 'react';
 import './App.css';
-import Navbar from './Components/Navbar';
-import CartContainer from './Components/CartContainer'; 
-import { createStore } from  'redux';
-import reducer from './reducer.js';
-import { Provider } from 'react-redux';
-// initial Store
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import Header from './Header';
+import Home from './Home';
+import Checkout from './Checkout';
+import Login from './Login';
+import {useStateValue} from './StateProvider';
+import {auth} from './firebase';
 
-
-// store
-
-const store = createStore(reducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
-
-//console.log(store.getState);
 function App() {
-  //if(loading){
-    //return(
-      //<div className='loading'>
-        //<h1>Loading...</h1>
-      //</div>
-    //);
-  //}
+  const[{user},dispatch]=useStateValue();
+
+  useEffect(()=>{
+     const unsubscribe= auth.onAuthStateChanged((authUser)=>{
+        if(authUser){
+           dispatch({
+             type:'SET_USER',
+             user:authUser
+           })
+        }else{
+            dispatch({
+              type:'SET_USER',
+              user:null,
+            })
+        }
+      })
+
+      return()=>{
+        unsubscribe();
+      }
+  },[])
+
+  console.log('user is >>>',user);
   return (
-    <Provider store={store}>
-      <Navbar/>
-      <CartContainer />
-    </Provider>
+    <Router>
+    <div className="App">
+       <Switch>
+         <Route exact path="/">
+           <Header/>
+           <Home/>
+         </Route>
+         <Route path="/checkout">
+           <Header/>
+           <Checkout/>
+         </Route>
+         <Route path="/login">
+           <Login/>
+         </Route>
+       </Switch>
+      </div>
+    </Router>
   );
 }
 
